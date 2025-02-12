@@ -1,0 +1,58 @@
+---
+title: "Assignment 1"
+author: "Max"
+format: html
+editor: visual
+---
+
+## Questions and Tasks 
+
+1.  To begin, I opened a new version controlled project with Rstudio, choosing the Git option to clone the repository given in the assignment document. After that, I added packages to the project library and check / set working directory if needed.
+
+```{r}
+#library in package, packages are already installed
+library(tidyverse)
+library(dplyr)
+library(haven)
+getwd() #check working directory, it is set to assignment folder I created using point and click GIT/ project wizard, so don't need to change using setwd()
+
+
+```
+
+Now that the repository is available, I import the data and inspect for missing and unusual values. To inspect the data I first use the head function, and the view function to look at the entire data set.
+
+```{r}
+Avengers_data <- read.csv("avengers.csv")
+head(Avengers_data)
+view(Avengers_data)
+```
+
+2.  Now, to look at complete clean cases and create a subset with only these complete cases , will inspect for missing values and drop any rows with missing values.
+
+    ```{r}
+    clean_avengers <- drop_na(Avengers_data) #creating new object where rows with missing values are dropped using drop_na function in tidyverse
+    view(clean_avengers) # new object looks as it should, missing values dropped. 
+
+    ```
+
+Next, the variable combat effectiveness is calculated as the sum of agility, speed, strength, and willpower
+
+```{r}
+avengers_effectiveness <- mutate(clean_avengers,combateffectiveness = (agility+ speed +strength+ willpower)) # creating a new object that includes the calculated variable combateffectiveness
+head(avengers_effectiveness) #checking first rows to ensure variable was calculated and appears in data. 
+
+
+```
+
+3.  Creating dataset that only includes dead avengers with no superpowers in both spss and csv format.
+
+```{r}
+dead_avengers <- filter (avengers_effectiveness,superpower =="no" & died =="yes") #filter for avengers who have dead = yes and superpower =no 
+head(dead_avengers) #check data to confirm filter worked
+
+#write csv of new dataset
+write.csv(dead_avengers, "dead_avengers.csv")
+
+#write Sav (spss) using write_sav, part of haven package
+write_sav(dead_avengers,"dead_avengers.sav")
+```

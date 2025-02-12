@@ -5,7 +5,7 @@ format: html
 editor: visual
 ---
 
-## Questions and Tasks 
+## Questions and Tasks
 
 1.  To begin, I opened a new version controlled project with Rstudio, choosing the Git option to clone the repository given in the assignment document. After that, I added packages to the project library and check / set working directory if needed.
 
@@ -56,3 +56,45 @@ write.csv(dead_avengers, "dead_avengers.csv")
 #write Sav (spss) using write_sav, part of haven package
 write_sav(dead_avengers,"dead_avengers.sav")
 ```
+
+Now for summary statistics
+
+```{r}
+summarise(dead_avengers, #summraise 3 vars - combateffectiveness, kills, injuries,  ,
+          mean(combateffectiveness),
+          mean (kills),
+          mean(injuries), #calc mean for three variables
+          sd(combateffectiveness),
+          sd(kills),
+          sd(injuries),
+          min(combateffectiveness), max(combateffectiveness),
+          min(kills), max(kills),
+          min(injuries), max(injuries)) # min max / range for 3 var
+
+summarise( #summraise 3 vars - combateffectiveness, kills, injuries, by battlefield (north/south)
+  group_by(dead_avengers,north_south),# group summary stats by battlefield
+          mean(combateffectiveness),
+          mean (kills),
+          mean(injuries), #calc mean for three variables
+          sd(combateffectiveness),
+          sd(kills),
+          sd(injuries),
+          min(combateffectiveness), max(combateffectiveness),
+          min(kills), max(kills),
+          min(injuries), max(injuries)) # min max / range for 3 var
+          
+
+```
+
+4.   The north battlefield was more effective with a mean CE of 499.78. The north battlefield also had the most injuries with a mean of 4.6 compared to 4.2.
+
+5.  The most erroneous variable
+
+    ```{r}
+    #calculate standard error
+    summarise(dead_avengers,
+              sd(combateffectiveness), seCE = sd(combateffectiveness)/sqrt(101),
+              sd(kills), seK = sd(kills)/sqrt(101),
+              sd(injuries), seI = sd(injuries)/sqrt(101))
+
+    ```

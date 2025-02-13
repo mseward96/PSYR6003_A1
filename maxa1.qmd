@@ -86,9 +86,9 @@ summarise( #summraise 3 vars - combateffectiveness, kills, injuries, by battlefi
 
 ```
 
-4.   The north battlefield was more effective with a mean CE of 499.78. The north battlefield also had the most injuries with a mean of 4.6 compared to 4.2.
+4.  The north battlefield was more effective with a mean CE of 499.78. The north battlefield also had the most injuries with a mean of 4.6 compared to 4.2.
 
-5.  The most erroneous variable
+5.  The most erroneous variable -
 
     ```{r}
     #calculate standard error
@@ -98,3 +98,49 @@ summarise( #summraise 3 vars - combateffectiveness, kills, injuries, by battlefi
               sd(injuries), seI = sd(injuries)/sqrt(101))
 
     ```
+
+6.   How to estimate sample size. This will be answered in assignment write up.
+
+    -   Essentially, you can conduct a power analysis, or use another method such as relying on heuristics, prior research, / just not justifying for exploratory research.
+
+7.   Small effect size of 0.2, if this were a real study you could base this off effect sizes from meta analyses etc.
+
+8.   Carry out a power analysis for chosen effect size.
+
+    ```{r}
+    library(pwr) #pwr package in library
+    # code for conducting power analysis for a t test
+    pwr.t.test(d= 0.2, sig.level = 0.05, power = 0.8) 
+    ```
+
+9.  Determine power if there is truly no group difference
+
+    ```{r}
+    #library in TOSTER
+    library(TOSTER) # using tost package to test for sample size required to detect no dif between groups
+    powerTOSTtwo(alpha=.05, statistical_power=.8, low_eqbound_d=-.2, high_eqbound_d = .2)
+    ```
+
+10. Calculate effect size for independent t test where *t = 4.25*.
+
+    ```{r}
+    library(tidyverse)
+    library(effectsize)
+     #get N's for superpower yes/no groups 
+      group_by(clean_avengers, superpower) %>%
+        summarise(groupsize = n())
+
+
+    #calculate effect size for t test
+
+    t <- 4.25 # t stat from assignment
+    # for N do we use real N or calculated hypothetical group sizes??
+    #code below uses N from data set for superpower yes/no
+    n1 <- 780 #group size from last question -
+    n2 <- 32 # group 2 size """"
+    t_to_d(t, df_error = n1+n2-2, paired = FALSE)
+
+
+    ```
+
+Effect size is d = .30, 95% CI \[.016,0.44\]

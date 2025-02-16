@@ -16,7 +16,7 @@ library(dplyr)
 library(haven)
 getwd() #check working directory, it is set to assignment folder I created using point and click GIT/ project wizard, so don't need to change using setwd()
 
-
+#copied url from igor's github and cloned to create new version controlled projecton personal github
 ```
 
 Now that the repository is available, I import the data and inspect for missing and unusual values. To inspect the data I first use the head function, and the view function to look at the entire data set.

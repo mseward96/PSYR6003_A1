@@ -25,6 +25,7 @@ Now that the repository is available, I import the data and inspect for missing 
 Avengers_data <- read.csv("avengers.csv")
 head(Avengers_data)
 view(Avengers_data)
+
 ```
 
 2.  Now, to look at complete clean cases and create a subset with only these complete cases , will inspect for missing values and drop any rows with missing values.
@@ -33,6 +34,8 @@ view(Avengers_data)
     clean_avengers <- drop_na(Avengers_data) #creating new object where rows with missing values are dropped using drop_na function in tidyverse
     view(clean_avengers) # new object looks as it should, missing values dropped. 
 
+
+    #using drop_na is a bit of a blunt tool. it works for this data set but using na.rm in calculations would also ensure missing values aren't used in analyses, while keeping rows which may only have values missing for a few variables, but still have valuable usuable data in other vars. 
     ```
 
 Next, the variable combat effectiveness is calculated as the sum of agility, speed, strength, and willpower
@@ -71,6 +74,8 @@ summarise(dead_avengers, #summraise 3 vars - combateffectiveness, kills, injurie
           min(kills), max(kills),
           min(injuries), max(injuries)) # min max / range for 3 var
 
+#I don't need to use na.rm as I already dropped all cases with any missing values
+
 summarise( #summraise 3 vars - combateffectiveness, kills, injuries, by battlefield (north/south)
   group_by(dead_avengers,north_south),# group summary stats by battlefield
           mean(combateffectiveness),
@@ -99,26 +104,33 @@ summarise( #summraise 3 vars - combateffectiveness, kills, injuries, by battlefi
 
     ```
 
-6.   How to estimate sample size. This will be answered in assignment write up.
+6.  How to estimate sample size. This will be answered in assignment write up.
 
-    -   Essentially, you can conduct a power analysis, or use another method such as relying on heuristics, prior research, / just not justifying for exploratory research.
+```         
+-   Essentially, you can conduct a power analysis, or use another method such as relying on heuristics, prior research, / just not justifying for exploratory research.
+```
 
-7.   Small effect size of 0.2, if this were a real study you could base this off effect sizes from meta analyses etc.
+7.  Med effect size of 0.5, if this were a real study you could base this off effect sizes from meta analyses etc.
 
-8.   Carry out a power analysis for chosen effect size.
+8.  Carry out a power analysis for chosen effect size.
 
     ```{r}
     library(pwr) #pwr package in library
     # code for conducting power analysis for a t test
-    pwr.t.test(d= 0.2, sig.level = 0.05, power = 0.8) 
+    pwr.t.test(d= 0.5, sig.level = 0.05, power = 0.8) 
+
     ```
+
+<!-- -->
 
 9.  Determine power if there is truly no group difference
 
     ```{r}
-    #library in TOSTER
+    # #library in TOSTER
     library(TOSTER) # using tost package to test for sample size required to detect no dif between groups
-    powerTOSTtwo(alpha=.05, statistical_power=.8, low_eqbound_d=-.2, high_eqbound_d = .2)
+
+    powerTOSTtwo(alpha=.05, statistical_power=.8, low_eqbound_d=-.5, high_eqbound_d = .5)
+
     ```
 
 10. Calculate effect size for independent t test where *t = 4.25*.

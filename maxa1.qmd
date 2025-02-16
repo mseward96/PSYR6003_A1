@@ -146,11 +146,11 @@ summarise( #summraise 3 vars - combateffectiveness, kills, injuries, by battlefi
     #calculate effect size for t test
 
     t <- 4.25 # t stat from assignment
-    # for N do we use real N or calculated hypothetical group sizes??
+    # 
     #code below uses N from data set for superpower yes/no
-    n1 <- 780 #group size from last question -
+    n1 <- 780 #group size from summarise n-
     n2 <- 32 # group 2 size """"
-    t_to_d(t, df_error = n1+n2-2, paired = FALSE)
+    t_to_d(t, df_error = n1+n2-2, paired = FALSE) #indp sample t test convert to cohens d effect size
     cohen.ES(test="t", size ="small")
 
     ```

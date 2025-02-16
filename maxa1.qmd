@@ -139,7 +139,7 @@ summarise( #summraise 3 vars - combateffectiveness, kills, injuries, by battlefi
     n1 <- 780 #group size from last question -
     n2 <- 32 # group 2 size """"
     t_to_d(t, df_error = n1+n2-2, paired = FALSE)
-
+    cohen.ES(test="t", size ="small")
 
     ```
 
